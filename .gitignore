@@ -7,6 +7,12 @@
 *.o
 *.obj
 
+#other file
+*.bak
+*.html
+*.s
+*.ii
+
 # Precompiled Headers
 *.gch
 *.pch
