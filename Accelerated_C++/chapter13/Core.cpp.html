@@ -1,0 +1,71 @@
+<html>
+<head>
+<title>D:\MyFiles\MyDocuments\BooksSourceCodes\Accelerated C++\chapter13\Core.cpp.html</title>
+<meta name="Generator" content="Vim/6.4">
+<meta http-equiv="content-type" content="text/html; charset=KS_C_5601-1987">
+</head>
+<body bgcolor="#000080" text="#ffffff"><table width="100%" cellspacing="0" cellpadding="3" bgcolor="#000080"><tr><td><pre><font color="#ffffff">
+<font color="#00ff00">#include </font><font color="#00ffff">&lt;algorithm&gt;</font>
+
+<font color="#00ff00">#ifdef _MSC_VER</font>
+<font color="#00ff00">#include </font><font color="#00ffff">&quot;../minmax.h&quot;</font>
+<font color="#00ff00">#else</font>
+<font color="#ffff00">using</font> std::min;
+<font color="#00ff00">#endif</font>
+
+<font color="#00ff00">#include </font><font color="#00ffff">&quot;Core.h&quot;</font>
+<font color="#00ff00">#include </font><font color="#00ffff">&quot;grade.h&quot;</font>
+
+<font color="#ffff00">using</font> std::istream;
+<font color="#ffff00">using</font> std::string;
+<font color="#ffff00">using</font> std::vector;
+std::istream&amp; read_hw(std::istream&amp; in, std::vector&lt;<font color="#ffa500"><b>double</b></font>&gt;&amp; hw);
+
+string Core::name() <font color="#ffa500"><b>const</b></font> { <font color="#ffff00">return</font> n; }
+
+<font color="#ffa500"><b>double</b></font> Core::grade() <font color="#ffa500"><b>const</b></font>
+{
+    <font color="#ffff00">return</font> ::grade(midterm, final, homework);
+}
+
+istream&amp; Core::read_common(istream&amp; in)
+{
+    <font color="#c0c0c0"><b>// read and store the student's name and exam grades</b></font>
+    in &gt;&gt; n &gt;&gt; midterm &gt;&gt; final;
+    <font color="#ffff00">return</font> in;
+}
+
+istream&amp; Core::read(istream&amp; in)
+{
+    read_common(in);
+    read_hw(in, homework);
+    <font color="#ffff00">return</font> in;
+}
+
+istream&amp; Grad::read(istream&amp; in)
+{
+    read_common(in);
+    in &gt;&gt; thesis;
+    read_hw(in, homework);
+    <font color="#ffff00">return</font> in;
+}
+
+<font color="#ffa500"><b>double</b></font> Grad::grade() <font color="#ffa500"><b>const</b></font>
+{
+    <font color="#ffff00">return</font> min(Core::grade(), thesis);
+}
+
+<font color="#ffa500"><b>bool</b></font> compare(<font color="#ffa500"><b>const</b></font> Core&amp; c1, <font color="#ffa500"><b>const</b></font> Core&amp; c2)
+{
+    <font color="#ffff00">return</font> c1.name() &lt; c2.name();
+}
+
+<font color="#ffa500"><b>bool</b></font> compare_Core_ptrs(<font color="#ffa500"><b>const</b></font> Core* cp1, <font color="#ffa500"><b>const</b></font> Core* cp2)
+{
+    <font color="#ffff00">return</font> compare(*cp1, *cp2);
+}
+
+</font></pre>
+</td></tr></table>
+</body>
+</html>
