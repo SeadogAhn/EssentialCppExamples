@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28010.2046
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Ex01_Types_and_Variables", "Ex01\Ex01.vcxproj", "{2901DBAB-0D83-4812-B118-A0109AD812FA}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Ex01_Types_and_Variables", "Ex01_Types_and_Variables\Ex01.vcxproj", "{2901DBAB-0D83-4812-B118-A0109AD812FA}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Ex02_Loop", "Ex02\Ex02.vcxproj", "{185F37B7-85BF-43C3-A2CB-0F3CC7F7BEC2}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Ex02_Loop", "Ex02_Loop\Ex02.vcxproj", "{185F37B7-85BF-43C3-A2CB-0F3CC7F7BEC2}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Ex03_FunctionTemplates", "Ex03\Ex03.vcxproj", "{71783AAB-4F5F-4354-B6D6-D5032A41E074}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Ex03_FunctionTemplates", "Ex03_FunctionTemplates\Ex03.vcxproj", "{71783AAB-4F5F-4354-B6D6-D5032A41E074}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Ex04_String", "Ex04\Ex04.vcxproj", "{BC697321-172A-4AE9-A161-7221D451D8FB}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Ex04_String", "Ex04_String\Ex04.vcxproj", "{BC697321-172A-4AE9-A161-7221D451D8FB}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Ex05_Vector", "Ex05_Vector\Ex05_Vector.vcxproj", "{39B572E8-4B67-4DAC-9384-72E44CE6653B}"
 EndProject
