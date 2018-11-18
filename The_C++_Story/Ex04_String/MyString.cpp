@@ -86,7 +86,7 @@ void CString::uncreate()
 			alloc.destroy(--it);
 		alloc.deallocate(data, avail - data + 1);
 	}
-	// reset pointers to indicate that the `Vec' is empty again
+	// reset pointers to indicate that the `CString' is empty again
 	data = avail = 0;
 }
 

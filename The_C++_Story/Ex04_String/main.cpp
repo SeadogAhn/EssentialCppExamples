@@ -48,5 +48,10 @@ int main()
 	// using operator[]
 	cout << str[2] << endl;
 
+	str3 = " " + str2;
+
+	cout << str3 << endl;
+
+
 	return EXIT_SUCCESS;
 }
