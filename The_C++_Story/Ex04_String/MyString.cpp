@@ -9,89 +9,103 @@ CString::CString()
 	create();
 }
 
-CString::CString(const char* str)
+CString::CString(const value_type* str)
 {
 	create(str, std::strlen(str));
 }
 
 CString::CString(const CString& str)
 {
-	create(str.str_, str.size_);
+	create(str.begin(), str.end());
 }
 
 CString::~CString()
 {
-	destroy();
+	uncreate();
 }
 
-CString& CString::operator=(const CString& str)
+CString& CString::operator=(const CString& rhs)
 {
-	CString temp(str);
-	Swap(temp);
+	// check for self-assignment
+	if (&rhs != this) {
+		// free the array in the left-hand side
+		uncreate();
+		// copy elements from the right-hand to the left-hand side
+		create(rhs.begin(), rhs.end());
+	}
 	return *this;
 }
+
 
 CString& CString::operator+=(const CString& cs)
 {
-	size_type sz = size_ + cs.size_ + 1;
-	char* temp = new char[sz];
-	std::strcpy(temp, str_);
-	std::strcat(temp, cs.str_);
+	size_type szOld = size();
+	size_type szNew = szOld + cs.size();
 
-	destroy();
-	str_ = temp;
-	size_ = strlen(temp);
+	iterator newData = alloc.allocate(szNew + 1);
+	std::uninitialized_fill(newData, newData + szNew + 1, 0);
+	std::uninitialized_copy(data, data + size(), newData);
+	std::uninitialized_copy(cs.begin(), cs.end(), newData + szOld);
 
+	uncreate();
+
+	data = newData;
+	avail = data + szNew;
+	
 	return *this;
-}
-
-CString::size_type CString::size()
-{
-	return size_;
-}
-
-bool CString::empty()
-{
-	return (size_ == 0);
 }
 
 void CString::create()
 {
-	size_ = 0;
-	str_ = NULL;
+	data = alloc.allocate(1);
+	std::uninitialized_fill(data, data + 1, 0);
+	avail = data;
 }
 
-void CString::create(const char* str, size_type sz)
+void CString::create(const value_type* str, size_type sz)
 {
-	str_ = new char[sz + 1];
-	std::strcpy(str_, str);
-	size_ = sz;
+	data = alloc.allocate(sz + 1);
+	std::uninitialized_fill(data, data + sz + 1, 0);
+	avail = std::uninitialized_copy(str, str+sz, data);
 }
 
-void CString::destroy()
+void CString::create(const_iterator i, const_iterator j)
 {
-	delete[] str_;
-	size_ = 0;
-	str_ = NULL;
+	size_type sz = j - i;
+	data = alloc.allocate(sz + 1);
+	std::uninitialized_fill(data, data + sz + 1, 0);
+	avail = std::uninitialized_copy(i, j, data);
 }
 
-void CString::Swap(CString &cs) throw()
+void CString::uncreate()
 {
-	std::swap(size_, cs.size_);
-	std::swap(str_, cs.str_);
+	if (data) {
+		// destroy (in reverse order) the elements that were constructed
+		iterator it = avail;
+		while (it != data)
+			alloc.destroy(--it);
+		alloc.deallocate(data, avail - data + 1);
+	}
+	// reset pointers to indicate that the `Vec' is empty again
+	data = avail = 0;
+}
+
+const char* CString::c_str() const noexcept
+{
+	return data;
 }
 
 std::ostream& operator<< (std::ostream& os, const CString& cs)
 {
-	os << cs.str_;
+	os << cs.c_str();
 	return os;
 }
 
 std::istream& operator>> (std::istream& is, CString& cs)
 {
-	char temp[256]; // string input maxsize
-	is >> temp;
-	cs = temp;
+	char str[2048];
+	is >> str;
+	cs = str;
 	return is;
 }
 

@@ -32,13 +32,13 @@ public:
 		unchecked_append(t);
 	}
 
-	size_type size() const { return avail - data; }  // changed
+	size_type size() const { return avail - data; }
 
 	iterator begin() { return data; }
 	const_iterator begin() const { return data; }
 
-	iterator end() { return avail; }                 // changed
-	const_iterator end() const { return avail; }     // changed
+	iterator end() { return avail; }
+	const_iterator end() const { return avail; }
 	void clear() { uncreate(); }
 	bool empty() const { return data == avail; }
 
