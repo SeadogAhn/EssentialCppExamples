@@ -31,21 +31,21 @@ public:
 	//! operator[] const
 	const value_type& operator[] (size_type i) const { return data[i]; }
 	//! size
-	size_type size() const { return avail - data; }
+	size_type size() const noexcept { return avail - data; }
 	//! c type string
 	const char* c_str() const noexcept;
 	//! begin
-	iterator begin() { return data; }
+	iterator begin() noexcept { return data; }
 	//! const begin
-	const_iterator begin() const { return data; }
+	const_iterator begin() const noexcept { return data; }
 	//! end
-	iterator end() { return avail; }
+	iterator end() noexcept { return avail; }
 	//! const end
-	const_iterator end() const { return avail; }
+	const_iterator end() const noexcept { return avail; }
 	//! clear data
 	void clear() { uncreate(); }
 	//! is empty
-	bool empty() const { return data == avail; }
+	bool empty() const noexcept { return data == avail; }
 private:
 	//! initial
 	void create();
