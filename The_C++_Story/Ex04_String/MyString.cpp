@@ -16,6 +16,7 @@ CString::CString(const value_type* str)
 
 CString::CString(const CString& str)
 {
+	std::cout << "copy constructor" << std::endl;
 	create(str.begin(), str.end());
 }
 
@@ -26,6 +27,7 @@ CString::~CString()
 
 CString& CString::operator=(const CString& rhs)
 {
+	std::cout << "assign operator" << std::endl;
 	// check for self-assignment
 	if (&rhs != this) {
 		// free the array in the left-hand side

@@ -2,6 +2,11 @@
 
 using namespace std;
 
+void func(CString str)
+{
+	cout << str << endl;
+}
+
 int main()
 {
 	// using default constructor
@@ -52,6 +57,7 @@ int main()
 
 	cout << str3 << endl;
 
+	func(str3);
 
 	return EXIT_SUCCESS;
 }
