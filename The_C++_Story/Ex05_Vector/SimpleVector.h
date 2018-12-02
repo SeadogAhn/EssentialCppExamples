@@ -1,8 +1,5 @@
 #pragma once
 
-#ifndef __MYVEC_H__
-#define __MYVEC_H__
-
 template <class T>
 class myVec {
 private:
@@ -97,5 +94,3 @@ myVec<T>::~myVec()
     if (v != 0)
         delete[] (v);
 }
-
-#endif //__MYVEC_H__

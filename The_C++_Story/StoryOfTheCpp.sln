@@ -13,6 +13,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Ex04_String", "Ex04_String\
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Ex05_Vector", "Ex05_Vector\Ex05_Vector.vcxproj", "{39B572E8-4B67-4DAC-9384-72E44CE6653B}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Ex06_SmartPointer", "Ex06_SmartPointer\Ex06_SmartPointer.vcxproj", "{527A4EC2-679B-4BAD-B50A-28FF63292C6F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -61,6 +63,14 @@ Global
 		{39B572E8-4B67-4DAC-9384-72E44CE6653B}.Release|x64.Build.0 = Release|x64
 		{39B572E8-4B67-4DAC-9384-72E44CE6653B}.Release|x86.ActiveCfg = Release|Win32
 		{39B572E8-4B67-4DAC-9384-72E44CE6653B}.Release|x86.Build.0 = Release|Win32
+		{527A4EC2-679B-4BAD-B50A-28FF63292C6F}.Debug|x64.ActiveCfg = Debug|x64
+		{527A4EC2-679B-4BAD-B50A-28FF63292C6F}.Debug|x64.Build.0 = Debug|x64
+		{527A4EC2-679B-4BAD-B50A-28FF63292C6F}.Debug|x86.ActiveCfg = Debug|Win32
+		{527A4EC2-679B-4BAD-B50A-28FF63292C6F}.Debug|x86.Build.0 = Debug|Win32
+		{527A4EC2-679B-4BAD-B50A-28FF63292C6F}.Release|x64.ActiveCfg = Release|x64
+		{527A4EC2-679B-4BAD-B50A-28FF63292C6F}.Release|x64.Build.0 = Release|x64
+		{527A4EC2-679B-4BAD-B50A-28FF63292C6F}.Release|x86.ActiveCfg = Release|Win32
+		{527A4EC2-679B-4BAD-B50A-28FF63292C6F}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
