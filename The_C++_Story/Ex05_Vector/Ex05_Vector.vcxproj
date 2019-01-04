@@ -152,7 +152,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
-    <ClInclude Include="SimpleVector.h" />
     <ClInclude Include="Vector.h" />
   </ItemGroup>
   <ItemGroup>
