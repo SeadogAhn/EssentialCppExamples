@@ -1,0 +1,112 @@
+#Directory declaration
+MAINDIR = $(TOOLSDIR)
+PGMDIR = $(MAINDIR)/bin
+LIBDIR = $(MAINDIR)/lib
+INCDIR = $(USER_HOME)/include
+
+#library version
+include LIBVERSION
+
+#Compiler
+CC        = gcc
+CXX       = g++
+
+# Compile time option
+LIBTYPE = SHARED
+EXECUTE =
+
+#Compiler optimize level option
+
+ifeq ($(EXECUTE), DEBUG)
+	OPTIMIZE  =
+	DEBUGFLAG = -g -D_DEBUG
+else
+	OPTIMIZE  = -O2
+	DEBUGFLAG =
+endif
+
+#Compiler option
+ifeq ($(LIBTYPE), STATIC)
+	LINKER   = ar rs
+	OBJFLAGS   = -Wall -W -c
+else
+	LINKER   = $(CXX) -shared -fPIC -Wall -W
+	OBJFLAGS   = -fPIC -Wall -c
+endif
+
+#setting oracle 11 for redhat 5
+CMPFLAGS =
+INCFLAGS = -I. -I$(INCDIR) -I$(INCDIR)/zlib -I$(INCDIR)/oracle
+LIBFLAGS = -L.
+
+#orther option
+REMOVE    = rm -rf
+COPY      = cp -pPf
+MKDIR     = mkdir -p -m 755
+RMDIR     = rmdir
+
+#Target Library Name
+LIBNAME   = emdf
+ifeq ($(LIBTYPE), STATIC)
+	EXE   = a
+else
+	EXE   = so
+endif
+
+#Target
+ifeq ($(EXECUTE), DEBUG)
+	TARGETNAME = lib$(LIBNAME)_dbg
+else
+	TARGETNAME = lib$(LIBNAME)
+endif
+
+ifeq ($(LIBTYPE), STATIC)
+	TARGET   = $(TARGETNAME).$(EXE)
+else
+	TARGET   = $(TARGETNAME).$(EXE).$(MAJORLIBVER).$(MINORLIBVER).$(PATCHLIBVER)
+	SUBTGT1  = $(TARGETNAME).$(EXE).$(MAJORLIBVER).$(MINORLIBVER)
+	SUBTGT2  = $(TARGETNAME).$(EXE).$(MAJORLIBVER)
+endif
+
+#Source file list
+SRCS  = $(wildcard *.cpp)
+
+#Object file list
+OBJS  = $(SRCS:.cpp=.o)
+
+.c.o :
+	$(CC) -std=c99 $(DEBUGFLAG) $(OPTIMIZE) $(OBJFLAGS) $(INCFLAGS) $<
+
+.cpp.o:
+	$(CXX) -std=c++1y $(DEBUGFLAG) $(OPTIMIZE) $(OBJFLAGS) $(INCFLAGS) $<
+
+all : $(OBJS)
+	$(REMOVE) $(TARGETNAME)*
+ifeq ($(LIBTYPE), STATIC)
+	$(LINKER) $(TARGET) $(OBJS)
+else
+	$(LINKER) $(CMPFLAGS) -o $(TARGET) $(OBJS) $(INCFLAGS) $(LIBFLAGS)
+endif
+
+install : all
+	$(MKDIR) $(INCDIR)/$(LIBNAME)
+	$(COPY) *.h $(INCDIR)/$(LIBNAME)
+	$(REMOVE) $(LIBDIR)/$(TARGETNAME).$(EXE)
+	$(REMOVE) $(LIBDIR)/$(SUBTGT2)
+	$(REMOVE) $(LIBDIR)/$(SUBTGT1)
+	$(REMOVE) $(LIBDIR)/$(TARGET)
+	ln -sf ./$(TARGET) $(SUBTGT1)
+	ln -sf ./$(SUBTGT1) $(SUBTGT2)
+	ln -sf ./$(SUBTGT2) ./$(TARGETNAME).$(EXE)
+	$(COPY) $(TARGETNAME)* $(LIBDIR)
+
+clean :
+	$(REMOVE) core
+	$(REMOVE) $(OBJS)
+	$(REMOVE) $(TARGETNAME).$(EXE)*
+
+uninstall : clean
+	$(REMOVE) $(LIBDIR)/$(TARGETNAME)*
+	$(REMOVE) $(INCDIR)/$(LIBNAME)/*.h
+	$(RMDIR) $(INCDIR)/$(LIBNAME)
+
