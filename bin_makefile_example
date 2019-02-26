@@ -1,0 +1,76 @@
+#Directory declaration
+MAINDIR = $(TOOLSDIR)
+PGMDIR = $(MAINDIR)/bin
+LIBDIR = $(MAINDIR)/lib
+INCDIR = $(USER_HOME)/include
+
+#Application Version
+include DAVIDAPPVER
+
+#DEBUG Mode
+EXECUTE=#DEBUG
+
+ifeq ($(EXECUTE), DEBUG)
+	DEBUGFLAGS = -g -D_DEBUG
+	DAVIDLIB = -letymon_dbg -lstdf_dbg -lemdf_dbg -ldavid_dbg
+	EXTNAME = _DBG
+else
+	DEBUGFLAGS =
+	DAVIDLIB = -letymon -lstdf -lemdf -ldavid
+	EXTNAME =
+endif
+
+#variable
+CC        = gcc
+CXX       = g++
+OFLAGS    = -Wall -W -c
+CFLAGS    = -Wall -W -o
+IFLAGS    = -I. -I$(INCDIR) -I$(INCDIR)/oracle
+LFLAGS    = -L. -L$(LIBDIR)
+#LIBS      = -lrt -lm -lc -lcrypt -ldl -lclntsh -locci -lftp -lpthread -lm -lz $(DAVIDLIB)
+LIBS      = -lclntsh -locci -lpthread -lm -lz -lftp $(DAVIDLIB)
+REMOVE    = rm -f
+COPY      = cp -f
+
+#file extensions
+O        = .o
+EXE      =
+
+.c.o :
+	$(CC) -std=c11  $(OFLAGS) $(DEBUGFLAGS) $(IFLAGS) $<
+
+.cpp.o:
+	$(CXX) -std=c++1y $(OFLAGS) $(DEBUGFLAGS) $(IFLAGS) $<
+
+all : DAVIDAppMain$(EXTNAME).$(MAJORLIBVER).$(MINORLIBVER).$(PATCHLIBVER)$(EXE) \
+	DAVIDSpecMain$(EXTNAME).$(MAJORLIBVER).$(MINORLIBVER).$(PATCHLIBVER)$(EXE) \
+	DAVIDTestMain$(EXTNAME).$(MAJORLIBVER).$(MINORLIBVER).$(PATCHLIBVER)$(EXE)
+
+clean :
+	$(REMOVE) core
+	$(REMOVE) *.txt
+	$(REMOVE) *$(O)
+	$(REMOVE) DAVIDAppMain$(EXTNAME).$(MAJORLIBVER).$(MINORLIBVER).$(PATCHLIBVER)$(EXE)
+	$(REMOVE) DAVIDSpecMain$(EXTNAME).$(MAJORLIBVER).$(MINORLIBVER).$(PATCHLIBVER)$(EXE)
+	$(REMOVE) DAVIDTestMain$(EXTNAME).$(MAJORLIBVER).$(MINORLIBVER).$(PATCHLIBVER)$(EXE)
+
+install : all
+	$(COPY) DAVIDAppMain$(EXTNAME).$(MAJORLIBVER).$(MINORLIBVER).$(PATCHLIBVER)$(EXE) $(PGMDIR)
+	$(COPY) DAVIDSpecMain$(EXTNAME).$(MAJORLIBVER).$(MINORLIBVER).$(PATCHLIBVER)$(EXE) $(PGMDIR)
+	$(COPY) DAVIDTestMain$(EXTNAME).$(MAJORLIBVER).$(MINORLIBVER).$(PATCHLIBVER)$(EXE) $(PGMDIR)
+	$(COPY) DAVIDAPPVER $(PGMDIR)
+
+uninstall: clean
+	$(REMOVE) $(PGMDIR)/DAVIDAppMain$(EXTNAME).$(MAJORLIBVER).$(MINORLIBVER).$(PATCHLIBVER)$(EXE)
+	$(REMOVE) $(PGMDIR)/DAVIDSpecMain$(EXTNAME).$(MAJORLIBVER).$(MINORLIBVER).$(PATCHLIBVER)$(EXE)
+	$(REMOVE) $(PGMDIR)/DAVIDTestMain$(EXTNAME).$(MAJORLIBVER).$(MINORLIBVER).$(PATCHLIBVER)$(EXE)
+	$(REMOVE) $(PGMDIR)/DAVIDAPPVER 
+
+DAVIDAppMain$(EXTNAME).$(MAJORLIBVER).$(MINORLIBVER).$(PATCHLIBVER)$(EXE) : DAVIDAppMain$(O) DAVIDApplication$(O)
+	$(CXX) $(DEBUGFLAGS) DAVIDAppMain$(O) DAVIDApplication$(O) $(IFLAGS) $(LFLAGS) $(LIBS) $(CFLAGS) $@
+
+DAVIDSpecMain$(EXTNAME).$(MAJORLIBVER).$(MINORLIBVER).$(PATCHLIBVER)$(EXE) : DAVIDSpecMain$(O) DAVIDSpecLoader$(O)
+	$(CXX) $(DEBUGFLAGS) DAVIDSpecMain$(O) DAVIDSpecLoader$(O) $(IFLAGS) $(LFLAGS) $(LIBS) $(CFLAGS) $@
+
+DAVIDTestMain$(EXTNAME).$(MAJORLIBVER).$(MINORLIBVER).$(PATCHLIBVER)$(EXE) : DAVIDTestMain$(O)
+	$(CXX) $(DEBUGFLAGS) DAVIDTestMain$(O) $(IFLAGS) $(LFLAGS) $(LIBS) $(CFLAGS) $@
