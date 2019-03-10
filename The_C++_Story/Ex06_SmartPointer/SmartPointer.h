@@ -2,6 +2,9 @@
 #include <string>
 #include <memory>
 #include <iostream>
+#include <cstdio>
+
+using namespace std;
 
 void message(const char * s) {
 	printf("\n%s\n", s);
